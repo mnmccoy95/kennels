@@ -1,10 +1,20 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { Home } from "./Home"
-import { AnimalCard } from "./animal/AnimalCard"
-import { LocationCard } from "./location/LocationCard"
-import { EmployeeCard } from "./employee/EmployeeCard"
-import { CustomerCard } from "./customer/CustomerCard"
+import { AnimalProvider } from "./animal/AnimalProvider"
+import { AnimalList } from "./animal/AnimalList"
+import { AnimalForm } from "./animal/AnimalForm"
+import { AnimalDetail } from "./animal/AnimalDetail"
+import { CustomerProvider } from "./customer/CustomerProvider"
+import { CustomerList } from "./customer/CustomerList"
+import { EmployeeProvider } from "./employee/EmployeeProvider"
+import { EmployeeList } from "./employee/EmployeeList"
+import { EmployeeForm } from "./employee/EmployeeForm"
+import { LocationList } from "./location/LocationList"
+import { LocationProvider } from "./location/LocationProvider"
+import { LocationForm } from "./location/LocationForm"
+// import { LocationDetail } from "./location/LocationDetail"
+
 
 export const ApplicationViews = (props) => {
     return (
@@ -14,25 +24,55 @@ export const ApplicationViews = (props) => {
                 <Home />
             </Route>
 
-            {/* Render the animal list when http://localhost:3000/animals */}
-            <Route path="/animals">
-                <AnimalCard />
-            </Route>
+            <AnimalProvider>
+                <Route exact path="/animals">
+                    <AnimalList />
+                </Route>
 
-            {/* Render the animal list when http://localhost:3000/locations */}
-            <Route path="/locations">
-                <LocationCard />
-            </Route>
+                <CustomerProvider>
+                    <LocationProvider>
+                        <Route exact path="/animals/create">
+                            <AnimalForm />
+                        </Route>
+                    </LocationProvider>
+                </CustomerProvider>
+                <Route exact path="/animals/:id">
+                    <AnimalDetail />
+                </Route>
+            </AnimalProvider>  
 
-            {/* Render the animal list when http://localhost:3000/employees */}
-            <Route path="/employees">
-                <EmployeeCard />
-            </Route>
+            <LocationProvider>
+                <Route exact path="/locations">
+                    <LocationList />
+                </Route>
+                <Route exact path="/locations/create">
+                    <LocationForm />
+                </Route>
+                {/* <Route exact path="/locations/:id">
+                    <LocationDetail />
+                </Route> */}
+            </LocationProvider>
 
-            {/* Render the animal list when http://localhost:3000/customers */}
-            <Route path="/customers">
-                <CustomerCard />
-            </Route>
+            <EmployeeProvider>
+                <Route exact path="/employees">
+                    <EmployeeList />
+                </Route>
+
+
+                <LocationProvider>
+                    <Route exact path="/employees/create">
+                        <EmployeeForm />
+                    </Route>
+                </LocationProvider>
+
+
+            </EmployeeProvider>
+
+            <CustomerProvider>
+                <Route exact path="/customers">
+                    <CustomerList />
+                </Route>
+            </CustomerProvider>
         </>
     )
 }

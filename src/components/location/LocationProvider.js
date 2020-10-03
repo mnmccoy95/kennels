@@ -4,29 +4,34 @@ import React, { useState, createContext } from "react"
     The context is imported and used by individual components
     that need data
 */
-export const AnimalContext = createContext()
+export const LocationContext = createContext()
 
 /*
  This component establishes what data can be used.
  */
-export const AnimalProvider = (props) => {
-    const [animals, setAnimals] = useState([])
+export const LocationProvider = (props) => {
+    const [locations, setLocations] = useState([])
 
-    const getAnimals = () => {
-        return fetch("http://localhost:8088/animals?_expand=location")
+    const getLocations = () => {
+        return fetch("http://localhost:8088/locations")
             .then(res => res.json())
-            .then(setAnimals)
+            .then(setLocations)
     }
 
-    const addAnimal = location => {
-        return fetch("http://localhost:8088/animals", {
+    const addLocation = location => {
+        return fetch("http://localhost:8088/locations", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(location)
         })
-            .then(getAnimals)
+            .then(getLocations)
+    }
+
+    const getLocationById = (id) => {
+        return fetch(`http://localhost:8088/locations/${id}?_embed=animals&_embed=employees`)
+            .then(res => res.json())
     }
 
     /*
@@ -36,10 +41,10 @@ export const AnimalProvider = (props) => {
         allows any child elements to access them.
     */
     return (
-        <AnimalContext.Provider value={{
-            animals, getAnimals, addAnimal
+        <LocationContext.Provider value={{
+            locations, getLocations, addLocation, getLocationById
         }}>
             {props.children}
-        </AnimalContext.Provider>
+        </LocationContext.Provider>
     )
 }
