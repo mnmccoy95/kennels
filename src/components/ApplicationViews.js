@@ -13,7 +13,7 @@ import { EmployeeForm } from "./employee/EmployeeForm"
 import { LocationList } from "./location/LocationList"
 import { LocationProvider } from "./location/LocationProvider"
 import { LocationForm } from "./location/LocationForm"
-// import { LocationDetail } from "./location/LocationDetail"
+import { LocationDetail } from "./location/LocationDetail"
 
 
 export const ApplicationViews = (props) => {
@@ -48,9 +48,9 @@ export const ApplicationViews = (props) => {
                 <Route exact path="/locations/create">
                     <LocationForm />
                 </Route>
-                {/* <Route exact path="/locations/:id">
+                <Route exact path="/locations/:id">
                     <LocationDetail />
-                </Route> */}
+                </Route>
             </LocationProvider>
 
             <EmployeeProvider>
